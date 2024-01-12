@@ -1,0 +1,20 @@
+<table class="min-w-full divide-y divide-gray-200 shadow-md">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Cognoms</th>
+      <th>Email</th>
+      <th>DNI</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for(user of users; track user.id){
+      <tr>
+        <td class="px-6 py-4 whitespace-nowrap">{{ user.name }}</td>
+        <td>{{ user.surname }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.id }}</td>
+      </tr>
+    }
+  </tbody>
+</table>

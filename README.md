@@ -1,10 +1,10 @@
 # Tasques per Desenvolupar l'Aplicació en Angular
 
-- [ ] **Integració de Dades**
-  - [ ] Carregar les dades de `users.json` a l'aplicació
+- [X] **Integració de Dades**
+  - [X] Carregar les dades de `users.json` a l'aplicació
 
-- [ ] **Desenvolupament de Funcionalitats**
-  - [ ] Implementar el llistat d'usuaris en una taula
+- [X] **Desenvolupament de Funcionalitats**
+  - [X] Implementar el llistat d'usuaris en una taula
   - [ ] Crear un formulari per afegir nous usuaris
   - [ ] Habilitar la visualització del perfil d'usuari en seleccionar-ne un de la llista
 
