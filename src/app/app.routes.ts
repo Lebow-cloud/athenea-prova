@@ -1,3 +1,13 @@
+import { UserProfileComponent } from './user-profile/user-profile.component'; // Asegúrate de importar el componente correcto
 import { Routes } from '@angular/router';
-
-export const routes: Routes = [];
+import { UsersTableComponent } from './users-table/users-table.component';
+export const routes: Routes = [
+  {
+    path: '',
+    component: UsersTableComponent,
+  },
+  {
+    path: 'user-profile/:dni',
+    component: UserProfileComponent,
+  },
+];

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserService, User } from '../services/UserService';
 import {
   FormBuilder,
   FormControl,
@@ -6,13 +8,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-
-interface User {
-  nom: string;
-  cognom: string;
-  email: string;
-  dni: string;
-}
 
 @Component({
   selector: 'app-users-table',
@@ -22,10 +17,9 @@ interface User {
 })
 export class UsersTableComponent {
   userForm: FormGroup;
-  listData: User[] = [];
+  users: User[] = [];
 
-  constructor(private fb: FormBuilder) {
-    this.listData = [];
+  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {
     this.userForm = this.fb.group({
       nom: ['', Validators.required],
       cognom: ['', Validators.required],
@@ -36,20 +30,28 @@ export class UsersTableComponent {
 
   public addItem(): void {
     if (this.userForm.valid) {
-      this.listData.push(this.userForm.value);
+      this.userService.addUser(this.userForm.value);
       this.userForm.reset();
     }
+    console.log()
   }
 
   reset() {
     this.userForm.reset();
   }
 
-  removeItem(element: User) {
-    this.listData.forEach((value, index) => {
-      if (value === element) this.listData.splice(index, 1);
-    });
+  removeItem(dni: string): void {
+    this.userService.removeUser(dni);
   }
 
-  ngOnInit() {}
+  onRowClicked(user: User): void {
+    this.router.navigate(['/user-profile', user.dni]);
+  }
+  
+
+  ngOnInit() {
+    this.userService.users.subscribe(updatedUsers => {
+      this.users = updatedUsers;
+    });
+  }
 }

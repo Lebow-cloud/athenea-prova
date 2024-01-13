@@ -1,0 +1,16 @@
+<div class="flex justify-center items-center h-screen">
+  <div
+    class="text-center bg-white rounded-xl border shadow-lg p-8 max-w-xl w-full"
+  >
+    <h2 class="text-xl font-semibold text-gray-800 mb-4">Perfil del Usuario</h2>
+    <div class="space-y-4">
+      @if(user){
+
+      <p class="text-gray-600">Nombre: {{ user.nom }}</p>
+      <p class="text-gray-600">Apellido: {{ user.cognom }}</p>
+      <p class="text-gray-600">Email: {{ user.email }}</p>
+      <p class="text-gray-600">DNI: {{ user.dni }}</p>
+      }
+    </div>
+  </div>
+</div>
