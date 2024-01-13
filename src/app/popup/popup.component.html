@@ -1,0 +1,27 @@
+<form [formGroup]="myform" (ngSubmit)="saveUser()">
+<h2 mat-dialog-title>Afegir Usuari (+)</h2>
+<div mat-dialog-content>
+    <mat-form-field>
+     <mat-label>Name</mat-label>
+     <input matInput formControlName='nom' >
+    </mat-form-field>
+    <mat-form-field>
+     <mat-label>Cognoms</mat-label>
+     <input matInput formControlName="cognoms">
+    </mat-form-field>
+    <mat-form-field>
+     <mat-label>email</mat-label>
+     <input matInput formControlName="email">
+    </mat-form-field>
+    <mat-form-field>
+     <mat-label>dni</mat-label>
+     <input matInput formControlName="dni">
+    </mat-form-field>
+    <div>
+    </div>
+ </div>
+</form>
+<div mat-dialog-actions>
+  <button mat-raised-button type='submit' class="border rounded bg-blue-500 font-bold py-2 px-4 mx-4">Afegir</button>
+  <button (click)="closePopup()" mat-raised-button class="border rounded bg-red-400 font-bold py-2 px-4 mx-4">Tancar</button>
+</div>

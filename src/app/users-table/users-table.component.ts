@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import {MatDialogModule} from '@angular/material/dialog'
+import { MatDialog } from '@angular/material/dialog';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -6,16 +8,16 @@ import { Router } from '@angular/router';
 import { UserService, User } from '../services/UserService';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { PopupComponent } from '../popup/popup.component';
 
 @Component({
   selector: 'app-users-table',
   templateUrl: './users-table.component.html',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, MatDialogModule],
   standalone: true,
 })
 export class UsersTableComponent {
@@ -24,7 +26,7 @@ export class UsersTableComponent {
   filteredUsers: User[] = [];
   searchTerm: string = '';
 
-  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {
+  constructor(private fb: FormBuilder, private userService: UserService, private router: Router, private dialog:MatDialog) {
     
     this.userForm = this.fb.group({
       nom: ['', Validators.required],
@@ -33,6 +35,20 @@ export class UsersTableComponent {
       dni: ['', Validators.required],
     });
     this.filteredUsers = [...this.users];
+  }
+
+  openPopup(){
+     var _popup = this.dialog.open(PopupComponent, {
+      width: '400px',
+      height: '500px',
+      data:{
+        title: 'Afegir Usuari (+)'
+      }
+    });
+
+    _popup.afterClosed().subscribe(item=>{
+      console.log(item)
+    })
   }
 
   public addItem(): void {
@@ -49,6 +65,10 @@ export class UsersTableComponent {
 
   removeItem(dni: string): void {
     this.userService.removeUser(dni);
+  }
+
+  loadInitialUsers(): void {
+    this.userService.initialUsers();
   }
 
   onRowClicked(user: User): void {
@@ -72,8 +92,6 @@ export class UsersTableComponent {
       );
     }
   }
-
-  
   
   downloadAsExcel() {
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.users);

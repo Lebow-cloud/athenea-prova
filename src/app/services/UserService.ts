@@ -9,11 +9,12 @@ export interface User {
   dni: string;
 }
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private usersSource = new BehaviorSubject<User[]>(usersData);
+  private usersSource = new BehaviorSubject<User[]>([]);
   users = this.usersSource.asObservable();
 
   constructor() { }
@@ -34,5 +35,16 @@ export class UserService {
     return currentUsers.find(user => user.dni === dni);
   }
 
+  initialUsers(): void {
+    const currentUsers = this.usersSource.getValue();
+    const combinedUsers = [...currentUsers];
   
+    usersData.forEach((jsonUser) => {
+      if (!combinedUsers.some(user => user.dni === jsonUser.dni)) {
+        combinedUsers.push(jsonUser);
+      }
+    });
+  
+    this.usersSource.next(combinedUsers);
+  }
 }

@@ -1,73 +1,90 @@
-<h1 class="text-white text-4xl text-center mb-4 mt-4">Athenea</h1>
-<h2 class="text-white text-2xl text-center">Afexeix usuaris a la taula, descarrega la informacío o navega al perfil del usuari!</h2>
-<section id="usersTable" class="mx-auto my-10 p-5 bg-white shadow-lg rounded-lg max-w-4xl">
-  <form [formGroup]="userForm" class="grid grid-cols-1 gap-6">
-    <div class="">
-      <label for="nom" class="font-semibold mx-2">Nom</label>
-      <input
-        type="text"
-        formControlName="nom"
-        class="mt-2 p-2 border border-gray-300 rounded"
-        placeholder="Nom"
-      />
-    </div>
+<h1 class="text-white text-4xl text-center mb-4 mt-4">Repte Tècnic</h1>
+<h2 class="text-white text-2xl text-center mb-2">
+  Afegeix usuaris a la taula, filtra, descarrega la informació o navega al
+  perfil de l'usuari!
+</h2>
+<section
+  id="usersTable"
+  class="lg:mx-auto mx-2 my-4 p-3 bg-white shadow-lg rounded-lg max-w-4xl"
+>
+  <div clasS="text-center">
+    <button
+      mat-button
+      (click)="openPopup()"
+      class="border rounded bg-blue-500 font-bold py-2 px-4 mx-4 my-4"
+    >
+      Afegir usuari (+)
+    </button>
+    <form [formGroup]="userForm" class="grid grid-cols-1 gap-4">
+      <div>
+        <input
+          type="text"
+          formControlName="nom"
+          class="mt-2 p-2 border border-gray-300 rounded"
+          placeholder="Nom"
+        />
+      </div>
+      <div>
+        <input
+          type="text"
+          formControlName="cognom"
+          class="mt-2 p-2 border border-gray-300 rounded"
+          placeholder="Cognoms"
+        />
+      </div>
+      <div>
+        <input
+          type="text"
+          formControlName="email"
+          class="mt-2 p-2 border border-gray-300 rounded"
+          placeholder="Email"
+        />
+      </div>
+      <div>
+        <input
+          type="text"
+          formControlName="dni"
+          class="mt-2 p-2 border border-gray-300 rounded"
+          placeholder="DNI"
+        />
+      </div>
+    </form>
+  </div>
+  <div class="flex justify-center gap-4 mt-4 text-center">
+    <button
+      type="button"
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      (click)="addItem()"
+      [disabled]="!userForm.valid"
+    >
+      Afegir Usuari
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+      (click)="reset()"
+    >
+      Reset
+    </button>
+  </div>
+  <h1 class="mt-4 text-center text-2xl bg-gray-800 text-white p-2">
+    Filtra usuaris per qualsevol camp
+  </h1>
+  <input
+    type="text"
+    (input)="onSearchChange($event)"
+    class="mt-3 border rounded w-full h-10 p-3"
+    placeholder="Buscar..."
+  />
 
-    <div class="">
-      <label for="cognom" class="font-semibold mx-2">Cognoms</label>
-      <input
-        type="text"
-        formControlName="cognom"
-        class="mt-2 p-2 border border-gray-300 rounded"
-        placeholder="Cognoms"
-      />
-    </div>
-
-    <div class="">
-      <label for="email" class="font-semibold mx-2">Email</label>
-      <input
-        type="text"
-        formControlName="email"
-        class="mt-2 p-2 border border-gray-300 rounded"
-        placeholder="Email"
-      />
-    </div>
-
-    <div class="">
-      <label for="dni" class="font-semibold mx-2">DNI</label>
-      <input
-        type="text"
-        formControlName="dni"
-        class="mt-2 p-2 border border-gray-300 rounded"
-        placeholder="DNI"
-      />
-    </div>
-
-    <div class="flex justify-start gap-4 mt-4">
-      <button
-        type="button"
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        (click)="addItem()"
-        [disabled]="!userForm.valid"
-      >
-        Afegir Usuari
-      </button>
-      <button
-        type="button"
-        class="btn btn-secondary bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
-        (click)="reset()"
-      >
-        Reset
-      </button>
-      <button (click)="downloadAsExcel()" class="btn btn-secondary bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-        Descarregar como Excel
-      </button>
-      <button (click)="downloadAsPDF()" class="btn btn-secondary bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
-        Descarregar com PDF
-      </button>
-    </div>
-  </form>
-  <input type="text" (input)="onSearchChange($event)" class="mt-5 border rounded w-full h-10 p-3" placeholder="Buscar...">
-
+  <div class="text-center">
+    <button
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-6"
+      (click)="loadInitialUsers()"
+    >
+      Importar usuaris 
+    </button>
+  </div>
   <div class="overflow-x-auto mt-8">
     <table class="min-w-full bg-white border-collapse">
       <thead class="bg-gray-800 text-white">
@@ -102,5 +119,19 @@
         }
       </tbody>
     </table>
+  </div>
+  <div class="mt-6 grid gap-4">
+    <button
+      (click)="downloadAsExcel()"
+      class="btn btn-secondary bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+    >
+      Descarregar com Excel
+    </button>
+    <button
+      (click)="downloadAsPDF()"
+      class="btn btn-secondary bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+    >
+      Descarregar com PDF
+    </button>
   </div>
 </section>
