@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import usersData from '../resources/users.json'
 
 export interface User {
   nom: string;
@@ -12,7 +13,7 @@ export interface User {
   providedIn: 'root'
 })
 export class UserService {
-  private usersSource = new BehaviorSubject<User[]>([]);
+  private usersSource = new BehaviorSubject<User[]>(usersData);
   users = this.usersSource.asObservable();
 
   constructor() { }
@@ -20,7 +21,6 @@ export class UserService {
   addUser(user: User): void {
     const currentUsers = this.usersSource.getValue();
     this.usersSource.next([...currentUsers, user]);
-    console.log("AAAA", user)
   }
 
   removeUser(dni: string): void {
