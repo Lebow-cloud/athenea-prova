@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as XLSX from 'xlsx';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import { Router } from '@angular/router';
 import { UserService, User } from '../services/UserService';
 import {
@@ -55,6 +57,23 @@ export class UsersTableComponent {
     XLSX.utils.book_append_sheet(wb, ws, 'Users');
 
     XLSX.writeFile(wb, 'UsersData.xlsx');
+  }
+
+  downloadAsPDF() {
+    const DATA = document.getElementById('usersTable');
+    if (DATA) {
+      html2canvas(DATA as HTMLElement).then(canvas => {
+        const fileWidth = 208;
+        const fileHeight = (canvas.height * fileWidth) / canvas.width;
+        const FILEURI = canvas.toDataURL('image/png');
+        let PDF = new jsPDF('p', 'mm', 'a4');
+        let position = 0;
+        PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
+        PDF.save('UsersData.pdf');
+      });
+    } else {
+      console.error('Elemento de la tabla no encontrado');
+    }
   }
 
   ngOnInit() {
