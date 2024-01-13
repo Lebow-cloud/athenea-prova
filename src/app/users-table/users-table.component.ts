@@ -21,14 +21,18 @@ import {
 export class UsersTableComponent {
   userForm: FormGroup;
   users: User[] = [];
+  filteredUsers: User[] = [];
+  searchTerm: string = '';
 
   constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {
+    
     this.userForm = this.fb.group({
       nom: ['', Validators.required],
       cognom: ['', Validators.required],
       email: ['', Validators.required],
       dni: ['', Validators.required],
     });
+    this.filteredUsers = [...this.users];
   }
 
   public addItem(): void {
@@ -50,6 +54,26 @@ export class UsersTableComponent {
   onRowClicked(user: User): void {
     this.router.navigate(['/user-profile', user.dni]);
   }
+
+  onSearchChange(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.searchTerm = value;
+    this.filterUsers();
+  }
+
+  filterUsers() {
+    if (!this.searchTerm) {
+      this.filteredUsers = [...this.users];
+    } else {
+      this.filteredUsers = this.users.filter(user => 
+        Object.values(user).some(value => 
+          value.toString().toLowerCase().includes(this.searchTerm.toLowerCase())
+        )
+      );
+    }
+  }
+
+  
   
   downloadAsExcel() {
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.users);
@@ -79,6 +103,8 @@ export class UsersTableComponent {
   ngOnInit() {
     this.userService.users.subscribe(updatedUsers => {
       this.users = updatedUsers;
+      this.filteredUsers = updatedUsers;
     });
+    
   }
 }
