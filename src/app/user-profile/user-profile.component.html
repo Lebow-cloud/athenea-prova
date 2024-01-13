@@ -1,4 +1,5 @@
-<div class="flex justify-center items-center h-screen">
+<div class="flex flex-col justify-center items-center h-screen">
+  <button class="text-white text-3xl border rounded mb-5" (click)="backHome()">Enrere</button>
   <div
     class="text-center bg-white rounded-xl border shadow-lg p-8 max-w-xl w-full"
   >
@@ -6,8 +7,8 @@
     <div class="space-y-4">
       @if(user){
 
-      <p class="text-gray-600">Nombre: {{ user.nom }}</p>
-      <p class="text-gray-600">Apellido: {{ user.cognom }}</p>
+      <p class="text-gray-600">Nom: {{ user.nom }}</p>
+      <p class="text-gray-600">Cognom: {{ user.cognom }}</p>
       <p class="text-gray-600">Email: {{ user.email }}</p>
       <p class="text-gray-600">DNI: {{ user.dni }}</p>
       }
