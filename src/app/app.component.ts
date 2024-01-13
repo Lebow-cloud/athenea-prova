@@ -7,7 +7,7 @@ import { UsersTableComponent } from './users-table/users-table.component';
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, UsersTableComponent],
-  template: `<app-users-table></app-users-table>`,
+  templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {

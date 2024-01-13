@@ -21,14 +21,11 @@ interface User {
   standalone: true,
 })
 export class UsersTableComponent {
-
   userForm: FormGroup;
-  listData: User[] = []; 
-
+  listData: User[] = [];
 
   constructor(private fb: FormBuilder) {
-
-    this.listData = []
+    this.listData = [];
     this.userForm = this.fb.group({
       nom: ['', Validators.required],
       cognom: ['', Validators.required],
@@ -38,19 +35,20 @@ export class UsersTableComponent {
   }
 
   public addItem(): void {
-    this.listData.push(this.userForm.value);
-    this.userForm.reset();
+    if (this.userForm.valid) {
+      this.listData.push(this.userForm.value);
+      this.userForm.reset();
+    }
   }
 
   reset() {
     this.userForm.reset();
   }
 
-  removeItem(element: User){
+  removeItem(element: User) {
     this.listData.forEach((value, index) => {
-      if(value === element)
-      this.listData.splice(index,1)
-    })
+      if (value === element) this.listData.splice(index, 1);
+    });
   }
 
   ngOnInit() {}
