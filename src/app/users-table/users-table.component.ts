@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import * as XLSX from 'xlsx';
 import { Router } from '@angular/router';
 import { UserService, User } from '../services/UserService';
 import {
@@ -48,6 +49,13 @@ export class UsersTableComponent {
     this.router.navigate(['/user-profile', user.dni]);
   }
   
+  downloadAsExcel() {
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.users);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Users');
+
+    XLSX.writeFile(wb, 'UsersData.xlsx');
+  }
 
   ngOnInit() {
     this.userService.users.subscribe(updatedUsers => {
