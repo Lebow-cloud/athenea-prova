@@ -15,7 +15,7 @@ import {
 import { PopupComponent } from '../popup/popup.component';
 import { UserUploadComponent } from '../user-json-upload/user-json-upload.component';
 
-type UserKeys = keyof User
+type UserKeys = keyof User;
 
 @Component({
   selector: 'app-users-table',
@@ -28,14 +28,13 @@ export class UsersTableComponent {
   filteredUsers: User[] = [];
   searchTerm: string = '';
   currentSortColumn: string = '';
-sortDirection: 'asc' | 'desc' = 'asc';
+  sortDirection: 'asc' | 'desc' = 'asc';
 
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
     private router: Router,
-    private dialog: MatDialog,
-  
+    private dialog: MatDialog
   ) {}
 
   openPopup() {
@@ -68,8 +67,8 @@ sortDirection: 'asc' | 'desc' = 'asc';
     if (!this.searchTerm) {
       this.filteredUsers = [...this.users];
     } else {
-      this.filteredUsers = this.users.filter(user => 
-        Object.values(user).some(value => 
+      this.filteredUsers = this.users.filter((user) =>
+        Object.values(user).some((value) =>
           value.toString().toLowerCase().includes(this.searchTerm.toLowerCase())
         )
       );
@@ -87,7 +86,7 @@ sortDirection: 'asc' | 'desc' = 'asc';
       this.currentSortColumn = field;
       this.sortDirection = 'asc';
     }
-  
+
     this.filteredUsers.sort((a, b) => {
       if (a[field] < b[field]) {
         return this.sortDirection === 'asc' ? -1 : 1;
@@ -100,12 +99,53 @@ sortDirection: 'asc' | 'desc' = 'asc';
   }
 
   downloadAsExcel() {
+    if (!this.users || this.users.length === 0) {
+      console.error('No hay datos para exportar');
+      return;
+    }
+  
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.users);
+  
+    ws['!cols'] = [{ wch: 20 }, { wch: 20 }, { wch: 30 }, { wch: 10 }];
+  
+    if (ws['!ref']) {
+      const range = XLSX.utils.decode_range(ws['!ref']);
+  
+      for (let C = range.s.c; C <= range.e.c; ++C) {
+        const headerCellAddress = XLSX.utils.encode_col(C) + "1";
+        if (!ws[headerCellAddress]) continue;
+        ws[headerCellAddress].s = {
+          font: {
+            name: 'Arial',
+            sz: 14,
+            bold: true,
+            color: { rgb: "FFFFFF" }
+          },
+          fill: {
+            fgColor: { rgb: "4472C4" }
+          },
+          alignment: {
+            horizontal: "center",
+            vertical: "center"
+          },
+          border: {
+            top: { style: "thin", color: { rgb: "FFFFFF" } },
+            bottom: { style: "thin", color: { rgb: "FFFFFF" } },
+            left: { style: "thin", color: { rgb: "FFFFFF" } },
+            right: { style: "thin", color: { rgb: "FFFFFF" } }
+          }
+        };
+      }
+  
+    } else {
+      console.warn('No se pudo obtener el rango de la hoja de cálculo.');
+    }
+  
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Users');
-
     XLSX.writeFile(wb, 'UsersData.xlsx');
   }
+  
 
   downloadAsPDF() {
     const data = document.getElementById('usersTable');
@@ -113,21 +153,21 @@ sortDirection: 'asc' | 'desc' = 'asc';
       html2canvas(data).then((canvas) => {
         const imgData = canvas.toDataURL('image/png');
         const pdf = new jsPDF({
-          orientation: 'landscape', 
-          unit: 'mm', 
-          format: 'a4' 
+          orientation: 'landscape',
+          unit: 'mm',
+          format: 'a4',
         });
-  
+
         const pageWidth = pdf.internal.pageSize.getWidth();
         const pageHeight = pdf.internal.pageSize.getHeight();
-        const imageWidth = canvas.width * 0.264583; 
-        const imageHeight = canvas.height * 0.264583; 
-        const margin = 10; 
-        const xPos = (pageWidth - imageWidth) / 2; 
-        const yPos = margin; 
-  
+        const imageWidth = canvas.width * 0.264583;
+        const imageHeight = canvas.height * 0.264583;
+        const margin = 10;
+        const xPos = (pageWidth - imageWidth) / 2;
+        const yPos = margin;
+
         pdf.addImage(imgData, 'PNG', xPos, yPos, imageWidth, imageHeight);
-  
+
         pdf.save('UsersData.pdf');
       });
     } else {
@@ -139,7 +179,6 @@ sortDirection: 'asc' | 'desc' = 'asc';
     this.userService.users.subscribe((updatedUsers) => {
       this.users = updatedUsers;
       this.filteredUsers = updatedUsers;
-
     });
   }
 }
