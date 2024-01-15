@@ -22,7 +22,6 @@
   </h1>
   <input
     type="text"
-    (input)="onSearchChange($event)"
     class="mt-3 border rounded w-full h-10 p-3"
     placeholder="Buscar..."
   />
@@ -39,11 +38,35 @@
     <table class="min-w-full bg-white border-collapse">
       <thead class="bg-gray-800 text-white">
         <tr>
-          <th class="py-3 px-4 uppercase font-semibold text-sm">Nom</th>
-          <th class="py-3 px-4 uppercase font-semibold text-sm">Cognom</th>
-          <th class="py-3 px-4 uppercase font-semibold text-sm">Email</th>
-          <th class="py-3 px-4 uppercase font-semibold text-sm">DNI</th>
-          <th class="py-3 px-4 uppercase font-semibold text-sm">Accions</th>
+          <th class="py-3 px-4 uppercase font-semibold text-sm cursor-pointer" (click)="sortUsersBy('nom')">
+            <div class="flex items-center justify-center">
+              <span>Nom</span>
+              <span class="material-icons">arrow_drop_down</span>
+            </div>
+          </th>
+          <th class="py-3 px-4 uppercase font-semibold text-sm cursor-pointer" (click)="sortUsersBy('cognom')">
+            <div class="flex items-center justify-center" >
+              <span>Cognom</span>
+              <span class="material-icons">arrow_drop_down</span>
+            </div>
+          </th>
+          <th class="py-3 px-4 uppercase font-semibold text-sm cursor-pointer" (click)="sortUsersBy('email')">
+            <div class="flex items-center justify-center">
+              <span>Email</span>
+              <span class="material-icons">arrow_drop_down</span>
+            </div>
+          </th>
+          <th class="py-3 px-4 uppercase font-semibold text-sm cursor-pointer" (click)="sortUsersBy('dni')">
+            <div class="flex items-center justify-center">
+              <span>Dni</span>
+              <span class="material-icons">arrow_drop_down</span>
+            </div>
+          </th>
+          <th class="py-3 px-4 uppercase font-semibold text-sm">
+            <div class="flex">
+              <span>Accions</span>
+            </div>
+          </th>
         </tr>
       </thead>
       <tbody class="text-gray-700">

@@ -14,6 +14,8 @@ import {
 } from '@angular/forms';
 import { PopupComponent } from '../popup/popup.component';
 
+type UserKeys = keyof User
+
 @Component({
   selector: 'app-users-table',
   templateUrl: './users-table.component.html',
@@ -24,6 +26,8 @@ export class UsersTableComponent {
   users: User[] = [];
   filteredUsers: User[] = [];
   searchTerm: string = '';
+  currentSortColumn: string = '';
+sortDirection: 'asc' | 'desc' = 'asc';
 
   constructor(
     private fb: FormBuilder,
@@ -58,22 +62,23 @@ export class UsersTableComponent {
     this.router.navigate(['/user-profile', user.dni]);
   }
 
-  onSearchChange(event: Event) {
-    const value = (event.target as HTMLInputElement).value;
-    this.searchTerm = value;
-    this.filterUsers();
-  }
-
-  filterUsers() {
-    if (!this.searchTerm) {
-      this.filteredUsers = [...this.users];
+  sortUsersBy(field: UserKeys): void {
+    if (this.currentSortColumn === field) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
     } else {
-      this.filteredUsers = this.users.filter((user) =>
-        Object.values(user).some((value) =>
-          value.toString().toLowerCase().includes(this.searchTerm.toLowerCase())
-        )
-      );
+      this.currentSortColumn = field;
+      this.sortDirection = 'asc';
     }
+  
+    this.filteredUsers.sort((a, b) => {
+      if (a[field] < b[field]) {
+        return this.sortDirection === 'asc' ? -1 : 1;
+      }
+      if (a[field] > b[field]) {
+        return this.sortDirection === 'asc' ? 1 : -1;
+      }
+      return 0;
+    });
   }
 
   downloadAsExcel() {
