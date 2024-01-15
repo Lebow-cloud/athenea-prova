@@ -57,6 +57,22 @@ sortDirection: 'asc' | 'desc' = 'asc';
   loadInitialUsers(): void {
     this.userService.initialUsers();
   }
+  onSearchChange(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.searchTerm = value;
+    this.filterUsers();
+  }
+  filterUsers() {
+    if (!this.searchTerm) {
+      this.filteredUsers = [...this.users];
+    } else {
+      this.filteredUsers = this.users.filter(user => 
+        Object.values(user).some(value => 
+          value.toString().toLowerCase().includes(this.searchTerm.toLowerCase())
+        )
+      );
+    }
+  }
 
   onRowClicked(user: User): void {
     this.router.navigate(['/user-profile', user.dni]);

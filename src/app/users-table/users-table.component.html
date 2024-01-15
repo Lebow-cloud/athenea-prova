@@ -20,11 +20,7 @@
   <h1 class="mt-4 text-center text-2xl bg-gray-800 text-white p-2">
     Filtra usuaris per qualsevol camp
   </h1>
-  <input
-    type="text"
-    class="mt-3 border rounded w-full h-10 p-3"
-    placeholder="Buscar..."
-  />
+  <input type="text" (input)="onSearchChange($event)" class="mt-5 border rounded w-full h-10 p-3" placeholder="Buscar...">
 
   <div class="text-center">
     <button
