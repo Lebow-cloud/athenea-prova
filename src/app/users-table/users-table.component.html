@@ -11,62 +11,12 @@
     <button
       mat-button
       (click)="openPopup()"
-      class="border rounded bg-blue-500 font-bold py-2 px-4 mx-4 my-4"
+      class="border rounded bg-blue-500 text-white font-bold py-2 px-4 mx-4 my-4"
     >
       Afegir usuari (+)
     </button>
-    <form [formGroup]="userForm" class="grid grid-cols-1 gap-4">
-      <div>
-        <input
-          type="text"
-          formControlName="nom"
-          class="mt-2 p-2 border border-gray-300 rounded"
-          placeholder="Nom"
-        />
-      </div>
-      <div>
-        <input
-          type="text"
-          formControlName="cognom"
-          class="mt-2 p-2 border border-gray-300 rounded"
-          placeholder="Cognoms"
-        />
-      </div>
-      <div>
-        <input
-          type="text"
-          formControlName="email"
-          class="mt-2 p-2 border border-gray-300 rounded"
-          placeholder="Email"
-        />
-      </div>
-      <div>
-        <input
-          type="text"
-          formControlName="dni"
-          class="mt-2 p-2 border border-gray-300 rounded"
-          placeholder="DNI"
-        />
-      </div>
-    </form>
   </div>
-  <div class="flex justify-center gap-4 mt-4 text-center">
-    <button
-      type="button"
-      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      (click)="addItem()"
-      [disabled]="!userForm.valid"
-    >
-      Afegir Usuari
-    </button>
-    <button
-      type="button"
-      class="btn btn-secondary bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
-      (click)="reset()"
-    >
-      Reset
-    </button>
-  </div>
+  <div class="flex justify-center gap-4 mt-4 text-center"></div>
   <h1 class="mt-4 text-center text-2xl bg-gray-800 text-white p-2">
     Filtra usuaris per qualsevol camp
   </h1>
@@ -82,7 +32,7 @@
       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-6"
       (click)="loadInitialUsers()"
     >
-      Importar usuaris 
+      Importar usuaris
     </button>
   </div>
   <div class="overflow-x-auto mt-8">

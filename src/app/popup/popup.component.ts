@@ -9,6 +9,7 @@ import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { UserService } from '../services/UserService';
 
 @Component({
   selector: 'app-popup',
@@ -18,7 +19,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatFormFieldModule,
     ReactiveFormsModule,
     MatInputModule,
-    
   ],
   templateUrl: './popup.component.html',
   styleUrl: './popup.component.css',
@@ -31,29 +31,23 @@ export class PopupComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private ref: MatDialogRef<PopupComponent>,
     private fb: FormBuilder,
-    private buildr: FormBuilder
+    private service: UserService
   ) {
     this.myform = this.fb.group({
-      nom: [''],
-      cognoms: [''],
-      email: [''],
-      dni: ['']
+      nom: ['', Validators.required],
+      cognom: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      dni: ['', Validators.required],
     });
   }
 
-  /* myform = this.buildr.group({
-    nom: this.buildr.control(''),
-    cognoms: this.buildr.control(''),
-    email: this.buildr.control(''),
-    dni: this.buildr.control(''),
-  }); */
-
   closePopup() {
-    this.ref.close('import { BrowserModule } from @angular/platform-browser;'); 
+    this.ref.close();
   }
 
   saveUser() {
-    console.log( 'import { BrowserModule } from @angular/platform-browser;', this.myform.value)
+    this.service.addUser(this.myform.value);
+    this.closePopup();
   }
 
   ngInit(): void {

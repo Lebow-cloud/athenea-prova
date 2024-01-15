@@ -1,27 +1,44 @@
 <form [formGroup]="myform" (ngSubmit)="saveUser()">
-<h2 mat-dialog-title>Afegir Usuari (+)</h2>
-<div mat-dialog-content>
+  <h2 mat-dialog-title>Omple els camps</h2>
+  <div mat-dialog-content>
     <mat-form-field>
-     <mat-label>Name</mat-label>
-     <input matInput formControlName='nom' >
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="nom" />
     </mat-form-field>
     <mat-form-field>
-     <mat-label>Cognoms</mat-label>
-     <input matInput formControlName="cognoms">
+      <mat-label>Cognom</mat-label>
+      <input matInput formControlName="cognom" />
     </mat-form-field>
     <mat-form-field>
-     <mat-label>email</mat-label>
-     <input matInput formControlName="email">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" />
+      @if("myform.get('email').errors?.required"){
+      <mat-error>El camp Email és obligatori.</mat-error>
+      } @if("myform.get('email').errors?.email"){
+      <mat-error>Si us plau, introduïu un correu electrònic vàlid.</mat-error>
+      }
     </mat-form-field>
     <mat-form-field>
-     <mat-label>dni</mat-label>
-     <input matInput formControlName="dni">
+      <mat-label>Dni</mat-label>
+      <input matInput formControlName="dni" />
     </mat-form-field>
-    <div>
-    </div>
- </div>
+    <div></div>
+  </div>
+  <div mat-dialog-actions>
+    <button
+      [disabled]="myform.invalid"
+      mat-raised-button
+      type="submit"
+      class="border rounded bg-blue-500 font-bold py-2 px-4 mx-4"
+    >
+      Afegir
+    </button>
+    <button
+    [mat-dialog-close]
+      mat-raised-button
+      class="border rounded bg-red-400 font-bold py-2 px-4 mx-4"
+    >
+      Tancar
+    </button>
+  </div>
 </form>
-<div mat-dialog-actions>
-  <button mat-raised-button type='submit' class="border rounded bg-blue-500 font-bold py-2 px-4 mx-4">Afegir</button>
-  <button (click)="closePopup()" mat-raised-button class="border rounded bg-red-400 font-bold py-2 px-4 mx-4">Tancar</button>
-</div>

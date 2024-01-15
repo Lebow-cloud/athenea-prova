@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {MatDialogModule} from '@angular/material/dialog'
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
@@ -21,46 +21,29 @@ import { PopupComponent } from '../popup/popup.component';
   standalone: true,
 })
 export class UsersTableComponent {
-  userForm: FormGroup;
   users: User[] = [];
   filteredUsers: User[] = [];
   searchTerm: string = '';
 
-  constructor(private fb: FormBuilder, private userService: UserService, private router: Router, private dialog:MatDialog) {
-    
-    this.userForm = this.fb.group({
-      nom: ['', Validators.required],
-      cognom: ['', Validators.required],
-      email: ['', Validators.required],
-      dni: ['', Validators.required],
-    });
-    this.filteredUsers = [...this.users];
-  }
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private router: Router,
+    private dialog: MatDialog
+  ) {}
 
-  openPopup(){
-     var _popup = this.dialog.open(PopupComponent, {
+  openPopup() {
+    var _popup = this.dialog.open(PopupComponent, {
       width: '400px',
       height: '500px',
-      data:{
-        title: 'Afegir Usuari (+)'
-      }
+      data: {
+        title: 'Afegir Usuari (+)',
+      },
     });
 
-    _popup.afterClosed().subscribe(item=>{
-      console.log(item)
-    })
-  }
-
-  public addItem(): void {
-    if (this.userForm.valid) {
-      this.userService.addUser(this.userForm.value);
-      this.userForm.reset();
-    }
-    console.log()
-  }
-
-  reset() {
-    this.userForm.reset();
+    _popup.afterClosed().subscribe((item) => {
+      console.log(item);
+    });
   }
 
   removeItem(dni: string): void {
@@ -85,14 +68,14 @@ export class UsersTableComponent {
     if (!this.searchTerm) {
       this.filteredUsers = [...this.users];
     } else {
-      this.filteredUsers = this.users.filter(user => 
-        Object.values(user).some(value => 
+      this.filteredUsers = this.users.filter((user) =>
+        Object.values(user).some((value) =>
           value.toString().toLowerCase().includes(this.searchTerm.toLowerCase())
         )
       );
     }
   }
-  
+
   downloadAsExcel() {
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.users);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
@@ -104,7 +87,7 @@ export class UsersTableComponent {
   downloadAsPDF() {
     const DATA = document.getElementById('usersTable');
     if (DATA) {
-      html2canvas(DATA as HTMLElement).then(canvas => {
+      html2canvas(DATA as HTMLElement).then((canvas) => {
         const fileWidth = 208;
         const fileHeight = (canvas.height * fileWidth) / canvas.width;
         const FILEURI = canvas.toDataURL('image/png');
@@ -119,10 +102,9 @@ export class UsersTableComponent {
   }
 
   ngOnInit() {
-    this.userService.users.subscribe(updatedUsers => {
+    this.userService.users.subscribe((updatedUsers) => {
       this.users = updatedUsers;
       this.filteredUsers = updatedUsers;
     });
-    
   }
 }
