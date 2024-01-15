@@ -3,10 +3,10 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import usersData from '../resources/users.json'
 
 export interface User {
-  nom: string;
-  cognom: string;
+  name: string;
+  surname: string;
   email: string;
-  dni: string;
+  id: string;
 }
 
 
@@ -24,15 +24,15 @@ export class UserService {
     this.usersSource.next([...currentUsers, user]);
   }
 
-  removeUser(dni: string): void {
+  removeUser(id: string): void {
     const currentUsers = this.usersSource.getValue();
-    const updatedUsers = currentUsers.filter(user => user.dni !== dni);
+    const updatedUsers = currentUsers.filter(user => user.id !== id);
     this.usersSource.next(updatedUsers);
   }
 
-  getUserByDni(dni: string): User | undefined {
+  getUserByid(id: string): User | undefined {
     const currentUsers = this.usersSource.getValue();
-    return currentUsers.find(user => user.dni === dni);
+    return currentUsers.find(user => user.id === id);
   }
 
   initialUsers(): void {
@@ -40,11 +40,24 @@ export class UserService {
     const combinedUsers = [...currentUsers];
   
     usersData.forEach((jsonUser) => {
-      if (!combinedUsers.some(user => user.dni === jsonUser.dni)) {
+      if (!combinedUsers.some(user => user.id === jsonUser.id)) {
         combinedUsers.push(jsonUser);
       }
     });
   
+    this.usersSource.next(combinedUsers);
+  }
+
+  importUsers(usersData: User[]) {
+    const currentUsers = this.usersSource.getValue();
+    const combinedUsers = [...currentUsers];
+
+    usersData.forEach((jsonUser) => {
+      if (!combinedUsers.some(user => user.id === jsonUser.id)) {
+        combinedUsers.push(jsonUser);
+      }
+    });
+
     this.usersSource.next(combinedUsers);
   }
 }

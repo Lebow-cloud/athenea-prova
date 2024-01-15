@@ -8,10 +8,10 @@
       </h2>
       <div class="space-y-4">
         @if(user){
-        <p class="text-gray-600">Nom: {{ user.nom }}</p>
-        <p class="text-gray-600">Cognom: {{ user.cognom }}</p>
+        <p class="text-gray-600">Nom: {{ user.name }}</p>
+        <p class="text-gray-600">Cognom: {{ user.surname }}</p>
         <p class="text-gray-600">Email: {{ user.email }}</p>
-        <p class="text-gray-600">DNI: {{ user.dni }}</p>
+        <p class="text-gray-600">DNI: {{ user.id }}</p>
         }
       </div>
     </div>

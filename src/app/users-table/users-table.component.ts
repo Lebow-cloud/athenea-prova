@@ -13,13 +13,14 @@ import {
   Validators,
 } from '@angular/forms';
 import { PopupComponent } from '../popup/popup.component';
+import { UserUploadComponent } from '../user-json-upload/user-json-upload.component';
 
 type UserKeys = keyof User
 
 @Component({
   selector: 'app-users-table',
   templateUrl: './users-table.component.html',
-  imports: [ReactiveFormsModule, MatDialogModule],
+  imports: [ReactiveFormsModule, MatDialogModule, UserUploadComponent],
   standalone: true,
 })
 export class UsersTableComponent {
@@ -33,7 +34,8 @@ sortDirection: 'asc' | 'desc' = 'asc';
     private fb: FormBuilder,
     private userService: UserService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+  
   ) {}
 
   openPopup() {
@@ -75,7 +77,7 @@ sortDirection: 'asc' | 'desc' = 'asc';
   }
 
   onRowClicked(user: User): void {
-    this.router.navigate(['/user-profile', user.dni]);
+    this.router.navigate(['/user-profile', user.id]);
   }
 
   sortUsersBy(field: UserKeys): void {
@@ -126,6 +128,7 @@ sortDirection: 'asc' | 'desc' = 'asc';
     this.userService.users.subscribe((updatedUsers) => {
       this.users = updatedUsers;
       this.filteredUsers = updatedUsers;
+
     });
   }
 }

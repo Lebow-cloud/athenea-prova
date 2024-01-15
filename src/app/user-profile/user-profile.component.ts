@@ -24,9 +24,9 @@ export class UserProfileComponent {
   }
 
   ngOnInit(): void {
-    const dni = this.route.snapshot.paramMap.get('dni');
-    if (dni) {
-      this.user = this.userService.getUserByDni(dni);
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.user = this.userService.getUserByid(id);
     }
   }
 }

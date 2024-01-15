@@ -7,11 +7,11 @@
   id="usersTable"
   class="lg:mx-auto mx-2 my-4 p-3 bg-white shadow-lg rounded-lg max-w-4xl"
 >
-  <div clasS="text-center">
+  <div class="text-center">
     <button
       mat-button
       (click)="openPopup()"
-      class="border rounded bg-blue-500 text-white font-bold py-2 px-4 mx-4 my-4"
+      class="border rounded bg-blue-500 text-white font-bold py-2 px-4"
     >
       Afegir usuari (+)
     </button>
@@ -22,25 +22,26 @@
   </h1>
   <input type="text" (input)="onSearchChange($event)" class="mt-5 border rounded w-full h-10 p-3" placeholder="Buscar...">
 
-  <div class="text-center">
+  <div class="text-center md:flex row justify-center items-center">
     <button
-      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-6"
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-6 mb-4 mx-4"
       (click)="loadInitialUsers()"
     >
       Importar usuaris
     </button>
+  <app-user-upload class="mt-2"></app-user-upload>
   </div>
   <div class="overflow-x-auto mt-8">
     <table class="min-w-full bg-white border-collapse">
       <thead class="bg-gray-800 text-white">
         <tr>
-          <th class="py-3 px-4 uppercase font-semibold text-sm cursor-pointer" (click)="sortUsersBy('nom')">
+          <th class="py-3 px-4 uppercase font-semibold text-sm cursor-pointer" (click)="sortUsersBy('name')">
             <div class="flex items-center justify-center">
               <span>Nom</span>
               <span class="material-icons">arrow_drop_down</span>
             </div>
           </th>
-          <th class="py-3 px-4 uppercase font-semibold text-sm cursor-pointer" (click)="sortUsersBy('cognom')">
+          <th class="py-3 px-4 uppercase font-semibold text-sm cursor-pointer" (click)="sortUsersBy('surname')">
             <div class="flex items-center justify-center" >
               <span>Cognom</span>
               <span class="material-icons">arrow_drop_down</span>
@@ -52,7 +53,7 @@
               <span class="material-icons">arrow_drop_down</span>
             </div>
           </th>
-          <th class="py-3 px-4 uppercase font-semibold text-sm cursor-pointer" (click)="sortUsersBy('dni')">
+          <th class="py-3 px-4 uppercase font-semibold text-sm cursor-pointer" (click)="sortUsersBy('id')">
             <div class="flex items-center justify-center">
               <span>Dni</span>
               <span class="material-icons">arrow_drop_down</span>
@@ -71,15 +72,15 @@
           class="cursor-pointer hover:bg-blue-100"
           (click)="onRowClicked(item)"
         >
-          <td class="py-3 px-4">{{ item.nom }}</td>
-          <td class="py-3 px-4">{{ item.cognom }}</td>
+          <td class="py-3 px-4">{{ item.name }}</td>
+          <td class="py-3 px-4">{{ item.surname }}</td>
           <td class="py-3 px-4">{{ item.email }}</td>
-          <td class="py-3 px-4">{{ item.dni }}</td>
+          <td class="py-3 px-4">{{ item.id }}</td>
           <td>
             <button
               type="button"
               class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-              (click)="removeItem(item.dni); $event.stopPropagation()"
+              (click)="removeItem(item.id); $event.stopPropagation()"
             >
               Borrar
             </button>

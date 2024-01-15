@@ -34,10 +34,10 @@ export class PopupComponent {
     private service: UserService
   ) {
     this.myform = this.fb.group({
-      nom: ['', Validators.required],
-      cognom: ['', Validators.required],
+      name: ['', Validators.required],
+      surname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      dni: ['', Validators.required],
+      id: ['', Validators.required],
     });
   }
 

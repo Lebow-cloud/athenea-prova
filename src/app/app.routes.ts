@@ -7,7 +7,7 @@ export const routes: Routes = [
     component: UsersTableComponent,
   },
   {
-    path: 'user-profile/:dni',
+    path: 'user-profile/:id',
     component: UserProfileComponent,
   },
 ];

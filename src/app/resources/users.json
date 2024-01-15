@@ -1,44 +1,44 @@
 [
     {
-        "nom": "Jhon",
-        "cognom": "Doe",
+        "name": "Jhon",
+        "surname": "Doe",
         "email": "jhon.doe@email.com",
-        "dni": "4782938L"
+        "id": "4782938L"
     },
     {
-        "nom": "Alice",
-        "cognom": "Combs",
+        "name": "Alice",
+        "surname": "Combs",
         "email": "alice.combs@email.com",
-        "dni": "4749204T"
+        "id": "4749204T"
     },
     {
-        "nom": "Grace",
-        "cognom": "Hawkins",
+        "name": "Grace",
+        "surname": "Hawkins",
         "email": "grace.hawkins@email.com",
-        "dni": "5671938K"
+        "id": "5671938K"
     },
     {
-        "nom": "Wayne",
-        "cognom": "Stuart",
+        "name": "Wayne",
+        "surname": "Stuart",
         "email": "wayne.stuart@email.com",
-        "dni": "9022108P"
+        "id": "9022108P"
     },
     {
-        "nom": "Juan",
-        "cognom": "Spence",
+        "name": "Juan",
+        "surname": "Spence",
         "email": "juan.spence@email.com",
-        "dni": "4321165C"
+        "id": "4321165C"
     },
     {
-        "nom": "Ronan",
-        "cognom": "Orozco",
+        "name": "Ronan",
+        "surname": "Orozco",
         "email": "ronan.orozco@email.com",
-        "dni": "6738145E"
+        "id": "6738145E"
     },
     {
-        "nom": "Sylvia",
-        "cognom": "Vega",
+        "name": "Sylvia",
+        "surname": "Vega",
         "email": "sylvia.vega@email.com",
-        "dni": "2031145J"
+        "id": "2031145J"
     }
 ]
