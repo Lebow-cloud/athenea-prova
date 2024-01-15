@@ -108,16 +108,27 @@ sortDirection: 'asc' | 'desc' = 'asc';
   }
 
   downloadAsPDF() {
-    const DATA = document.getElementById('usersTable');
-    if (DATA) {
-      html2canvas(DATA as HTMLElement).then((canvas) => {
-        const fileWidth = 208;
-        const fileHeight = (canvas.height * fileWidth) / canvas.width;
-        const FILEURI = canvas.toDataURL('image/png');
-        let PDF = new jsPDF('p', 'mm', 'a4');
-        let position = 0;
-        PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
-        PDF.save('UsersData.pdf');
+    const data = document.getElementById('usersTable');
+    if (data) {
+      html2canvas(data).then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF({
+          orientation: 'landscape', 
+          unit: 'mm', 
+          format: 'a4' 
+        });
+  
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        const imageWidth = canvas.width * 0.264583; 
+        const imageHeight = canvas.height * 0.264583; 
+        const margin = 10; 
+        const xPos = (pageWidth - imageWidth) / 2; 
+        const yPos = margin; 
+  
+        pdf.addImage(imgData, 'PNG', xPos, yPos, imageWidth, imageHeight);
+  
+        pdf.save('UsersData.pdf');
       });
     } else {
       console.error('Elemento de la tabla no encontrado');

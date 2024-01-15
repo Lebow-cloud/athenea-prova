@@ -4,7 +4,7 @@
   perfil de l'usuari!
 </h2>
 <section
-  id="usersTable"
+  
   class="lg:mx-auto mx-2 my-4 p-3 bg-white shadow-lg rounded-lg max-w-4xl"
 >
   <div class="text-center">
@@ -32,7 +32,7 @@
   <app-user-upload class="mt-2"></app-user-upload>
   </div>
   <div class="overflow-x-auto mt-8">
-    <table class="min-w-full bg-white border-collapse">
+    <table id="usersTable" class="min-w-full bg-white border-collapse">
       <thead class="bg-gray-800 text-white">
         <tr>
           <th class="py-3 px-4 uppercase font-semibold text-sm cursor-pointer" (click)="sortUsersBy('name')">
